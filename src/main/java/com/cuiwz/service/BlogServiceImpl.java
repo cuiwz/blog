@@ -4,6 +4,7 @@ import com.cuiwz.NotFoundException;
 import com.cuiwz.dao.BlogRepository;
 import com.cuiwz.po.Blog;
 import com.cuiwz.po.Type;
+import com.cuiwz.util.MarkdownUtils;
 import com.cuiwz.util.MyBeanUtils;
 import com.cuiwz.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +40,21 @@ public class BlogServiceImpl implements BlogService {
         return blogRepository.findOne(id);
     }
 
+    @Transactional
+    @Override
+    public Blog getAndConvert(Long id) {
+        Blog blog = blogRepository.findOne(id);
+        if (blog == null) {
+            throw new NotFoundException("该博客不存在");
+        }
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog, b);
+        String content = b.getContent();
+        b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+
+        blogRepository.updateViews(id);
+        return b;
+    }
 
     @Override
     public Page<Blog> listBlog(Pageable pageable, BlogQuery blog) {

@@ -15,24 +15,23 @@ public class Comment {
     @Id
     @GeneratedValue
     private Long id;
-    private String nickname; // 昵称
-    private String email;    // 邮箱
-    private String content;  // 内容
-    private String avatar;   // 头像
+    private String nickname;
+    private String email;
+    private String content;
+    private String avatar;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime; // 创建时间
+    private Date createTime;
 
-    // 一个Comment只能有一个Blog
     @ManyToOne
     private Blog blog;
 
-    // 如果是一个父对象，会包含多个子对象
     @OneToMany(mappedBy = "parentComment")
     private List<Comment> replyComments = new ArrayList<>();
 
-    // 如果是一个子对象，则只能有一个父对象
     @ManyToOne
     private Comment parentComment;
+
+    private boolean adminComment;
 
     public Comment() {
     }
@@ -109,6 +108,14 @@ public class Comment {
         this.parentComment = parentComment;
     }
 
+    public boolean isAdminComment() {
+        return adminComment;
+    }
+
+    public void setAdminComment(boolean adminComment) {
+        this.adminComment = adminComment;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -118,6 +125,10 @@ public class Comment {
                 ", content='" + content + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", createTime=" + createTime +
+                ", blog=" + blog +
+                ", replyComments=" + replyComments +
+                ", parentComment=" + parentComment +
+                ", adminComment=" + adminComment +
                 '}';
     }
 }

@@ -81,6 +81,7 @@ public class BlogController {
         blog.setUser((User) session.getAttribute("user"));
         blog.setType(typeService.getType(blog.getType().getId()));
         blog.setTags(tagService.listTag(blog.getTagIds()));
+        System.out.println("blog flag: " + blog.getFlag());
         Blog b;
         if (blog.getId() == null) {
             b =  blogService.saveBlog(blog);
