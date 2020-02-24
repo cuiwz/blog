@@ -52,7 +52,7 @@
         <div class="header">提示：</div>
         <p th:text="${message}">恭喜，操作成功！</p>
       </div>
-      <table class="ui celled table">
+      <table class="ui compact teal table">
         <thead>
           <tr>
             <th></th>
@@ -61,7 +61,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="type, iterStat : ${page.content}">
+          <tr th:each="type,iterStat : ${page.content}">
             <td th:text="${iterStat.count}">1</td>
             <td th:text="${type.name}">刻意练习清单</td>
             <td>

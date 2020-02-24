@@ -14,40 +14,43 @@ public class Blog {
 
     @Id
     @GeneratedValue
-    private Long id; // 主键
+    private Long id;
 
     private String title;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
     private String content;
     private String firstPicture;
     private String flag;
-    private Integer views;          // 浏览次数
-    private boolean appreciation;   // 赞赏
-    private boolean shareStatement; // 转载声明
-    private boolean commentabled;   // 评论
-    private boolean published;      // 发布
-    private boolean recommend;      // 推荐
+    private Integer views;
+    private boolean appreciation;
+    private boolean shareStatement;
+    private boolean commentabled;
+    private boolean published;
+    private boolean recommend;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;        // 创建时间
+    private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;        // 更新时间
+    private Date updateTime;
 
-    // 一种Type包含多个Blog，一个Blog只有一种Type，Blog是多的一端，使用ManyToOne注解
-    // Blog主动维护与Type之间的关系
     @ManyToOne
     private Type type;
 
-    // 一个Blog可以有多个Tag，Blog主动维护与Tag之间的关系
-    // 设置级联关系 -> 当新增一个博客时，增加一个tag，tag会保存至数据库里面
     @ManyToMany(cascade = {CascadeType.PERSIST})
     private List<Tag> tags = new ArrayList<>();
 
-    // 一个User包含多个Blog，一个Blog只能有一个User，Blog是多的一端，使用ManyToOne注解
+
     @ManyToOne
     private User user;
 
-    // 一个Blog可以有多个Comment对象，被维护
     @OneToMany(mappedBy = "blog")
     private List<Comment> comments = new ArrayList<>();
+
+    @Transient
+    private String tagIds;
+
+    private String description;
 
     public Blog() {
     }
@@ -190,6 +193,47 @@ public class Blog {
         this.comments = comments;
     }
 
+
+    public String getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(String tagIds) {
+        this.tagIds = tagIds;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void init() {
+        this.tagIds = tagsToIds(this.getTags());
+    }
+
+    // 1,2,3
+    private String tagsToIds(List<Tag> tags) {
+        if (!tags.isEmpty()) {
+            StringBuffer ids = new StringBuffer();
+            boolean flag = false;
+            for (Tag tag : tags) {
+                if (flag) {
+                    ids.append(",");
+                } else {
+                    flag = true;
+                }
+                ids.append(tag.getId());
+            }
+            return ids.toString();
+        } else {
+            return tagIds;
+        }
+    }
+
+
     @Override
     public String toString() {
         return "Blog{" +
@@ -206,6 +250,12 @@ public class Blog {
                 ", recommend=" + recommend +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", type=" + type +
+                ", tags=" + tags +
+                ", user=" + user +
+                ", comments=" + comments +
+                ", tagIds='" + tagIds + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
