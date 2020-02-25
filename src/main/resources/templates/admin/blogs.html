@@ -66,7 +66,7 @@
                   <!--*/-->
                 </div>
               </div>
-              <button id="clear-btn" class="ui compact button">重置</button>
+              <button id="clear-btn" class="ui compact button">clear</button>
             </div>
 
           </div>
@@ -95,7 +95,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="blog, iterStat : ${page.content}">
+          <tr th:each="blog,iterStat : ${page.content}">
             <td th:text="${iterStat.count}">1</td>
             <td th:text="${blog.title}">刻意练习清单</td>
             <td th:text="${blog.type.name}">认知升级</td>
@@ -208,9 +208,8 @@
       $("[name='page']").val(0);
       loaddata();
     });
-
     function loaddata() {
-      $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+      $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
         title : $("[name='title']").val(),
         typeId : $("[name='typeId']").val(),
         recommend : $("[name='recommend']").prop('checked'),
