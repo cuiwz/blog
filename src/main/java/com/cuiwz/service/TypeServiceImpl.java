@@ -1,6 +1,6 @@
 package com.cuiwz.service;
 
-import com.cuiwz.NotFoundException;
+import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.dao.TypeRepository;
 import com.cuiwz.po.Type;
 import org.springframework.beans.BeanUtils;

@@ -7,6 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+      dialect: com.cuiwz.config.MysqlConfig
     show-sql: true
 
 logging:
@@ -15,5 +16,5 @@ logging:
     com.cuiwz: debug
   file: log/blog-dev.log
 
-
-
+server:
+  port: 80

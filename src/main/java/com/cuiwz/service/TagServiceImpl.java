@@ -1,6 +1,6 @@
 package com.cuiwz.service;
 
-import com.cuiwz.NotFoundException;
+import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.dao.TagRepository;
 import com.cuiwz.po.Tag;
 import org.springframework.beans.BeanUtils;

@@ -1,6 +1,6 @@
 package com.cuiwz.service;
 
-import com.cuiwz.NotFoundException;
+import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.dao.BlogRepository;
 import com.cuiwz.po.Blog;
 import com.cuiwz.po.Type;
