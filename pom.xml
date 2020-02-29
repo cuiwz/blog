@@ -44,6 +44,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>1.18</version>
+		</dependency>
+
 		<!-- commonmark插件 Markdown转HTML-->
 		<dependency>
 			<groupId>com.atlassian.commonmark</groupId>

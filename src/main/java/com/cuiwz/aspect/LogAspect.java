@@ -23,7 +23,6 @@ public class LogAspect {
     @Pointcut("execution(* com.cuiwz.web.*.*(..))")
     public void log() {}
 
-
     @Before("log()")
     public void doBefore(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -34,16 +33,6 @@ public class LogAspect {
         Object[] args = joinPoint.getArgs();
         RequestLog requestLog = new RequestLog(url, ip, classMethod, args);
         logger.info("Request : {}", requestLog);
-    }
-
-    @After("log()")
-    public void doAfter() {
-//        logger.info("--------doAfter--------");
-    }
-
-    @AfterReturning(returning = "result", pointcut = "log()")
-    public void doAfterRuturn(Object result) {
-        logger.info("Result : {}", result);
     }
 
     private class RequestLog {
