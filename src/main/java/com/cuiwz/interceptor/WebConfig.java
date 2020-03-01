@@ -2,14 +2,13 @@ package com.cuiwz.interceptor;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Created by cuiwz on 2020/02/22.
  */
 @Configuration
-public class WebConfig extends WebMvcConfigurerAdapter {
-
+public class WebConfig implements WebMvcConfigurer {
     /**
      * 注册拦截器
      * @param registry

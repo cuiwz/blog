@@ -1,8 +1,8 @@
 package com.cuiwz.web;
 
+import com.cuiwz.po.Tag;
 import com.cuiwz.service.BlogService;
 import com.cuiwz.service.TagService;
-import com.cuiwz.po.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,7 +28,7 @@ public class TagShowController {
 
     @GetMapping("/tags/{id}")
     public String tags(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-                        @PathVariable Long id, Model model) {
+                       @PathVariable Long id, Model model) {
         List<Tag> tags = tagService.listTagTop(10000);
         if (id == -1) {
            id = tags.get(0).getId();

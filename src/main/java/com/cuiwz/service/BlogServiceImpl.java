@@ -1,7 +1,7 @@
 package com.cuiwz.service;
 
-import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.dao.BlogRepository;
+import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.po.Blog;
 import com.cuiwz.po.Type;
 import com.cuiwz.util.MarkdownUtils;
@@ -32,13 +32,13 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getBlog(Long id) {
-        return blogRepository.findOne(id);
+        return blogRepository.findById(id).get();
     }
 
     @Transactional
     @Override
     public Blog getAndConvert(Long id) {
-        Blog blog = blogRepository.findOne(id);
+        Blog blog = blogRepository.findById(id).get();
         if (blog == null) {
             throw new NotFoundException("该博客不存在");
         }
@@ -95,8 +95,8 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Blog> listRecommendBlogTop(Integer size) {
-        Sort sort = new Sort(Sort.Direction.DESC, "updateTime");
-        Pageable pageable = new PageRequest(0, size, sort);
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Pageable pageable = PageRequest.of(0, size, sort);
         return blogRepository.findTop(pageable);
     }
 
@@ -131,7 +131,7 @@ public class BlogServiceImpl implements BlogService {
     @Transactional
     @Override
     public Blog updateBlog(Long id, Blog blog) {
-        Blog b = blogRepository.findOne(id);
+        Blog b = blogRepository.findById(id).get();
         if (b == null) {
             throw new NotFoundException("该博客不存在");
         }
@@ -143,6 +143,6 @@ public class BlogServiceImpl implements BlogService {
     @Transactional
     @Override
     public void deleteBlog(Long id) {
-        blogRepository.delete(id);
+        blogRepository.deleteById(id);
     }
 }

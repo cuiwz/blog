@@ -1,7 +1,7 @@
 package com.cuiwz.service;
 
-import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.dao.TagRepository;
+import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.po.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class TagServiceImpl implements TagService {
     @Transactional
     @Override
     public Tag getTag(Long id) {
-        return tagRepository.findOne(id);
+        return tagRepository.findById(id).get();
     }
 
     @Override
@@ -54,14 +54,14 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> listTagTop(Integer size) {
-        Sort sort = new Sort(Sort.Direction.DESC, "blogs.size");
-        Pageable pageable = new PageRequest(0, size, sort);
+        Sort sort = Sort.by(Sort.Direction.DESC, "blogs.size");
+        Pageable pageable = PageRequest.of(0, size, sort);
         return tagRepository.findTop(pageable);
     }
 
     @Override
     public List<Tag> listTag(String ids) { //1,2,3
-        return tagRepository.findAll(convertToList(ids));
+        return tagRepository.findAllById(convertToList(ids));
     }
 
     private List<Long> convertToList(String ids) {
@@ -78,7 +78,7 @@ public class TagServiceImpl implements TagService {
     @Transactional
     @Override
     public Tag updateTag(Long id, Tag tag) {
-        Tag t = tagRepository.findOne(id);
+        Tag t = tagRepository.findById(id).get();
         if (t == null) {
             throw new NotFoundException("不存在该标签");
         }
@@ -91,6 +91,6 @@ public class TagServiceImpl implements TagService {
     @Transactional
     @Override
     public void deleteTag(Long id) {
-        tagRepository.delete(id);
+        tagRepository.deleteById(id);
     }
 }

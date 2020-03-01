@@ -1,7 +1,7 @@
 package com.cuiwz.service;
 
-import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.dao.TypeRepository;
+import com.cuiwz.exception.NotFoundException;
 import com.cuiwz.po.Type;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class TypeServiceImpl implements TypeService {
     @Transactional
     @Override
     public Type getType(Long id) {
-        return typeRepository.findOne(id);
+        return typeRepository.findById(id).get();
     }
 
     @Override
@@ -53,15 +53,15 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public List<Type> listTypeTop(Integer size) {
-        Sort sort = new Sort(Sort.Direction.DESC, "blogs.size");
-        Pageable pageable = new PageRequest(0, size, sort);
+        Sort sort = Sort.by(Sort.Direction.DESC, "blogs.size");
+        Pageable pageable = PageRequest.of(0, size, sort);
         return typeRepository.findTop(pageable);
     }
 
     @Transactional
     @Override
     public Type updateType(Long id, Type type) {
-        Type t = typeRepository.findOne(id);
+        Type t = typeRepository.findById(id).get();
         if (t == null) {
             throw new NotFoundException("不存在该类型");
         }
@@ -73,6 +73,6 @@ public class TypeServiceImpl implements TypeService {
     @Transactional
     @Override
     public void deleteType(Long id) {
-        typeRepository.delete(id);
+        typeRepository.deleteById(id);
     }
 }
