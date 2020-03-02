@@ -7,5 +7,7 @@ import com.cuiwz.po.User;
  */
 public interface UserService {
 
+    User findByUsername(String username);
+
     User checkUser(String username, String password);
 }
