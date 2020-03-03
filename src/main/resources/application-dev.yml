@@ -1,12 +1,32 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(F1+YnlELc8JtuVXuRCsbyiedndlaHQiqNtaunInIGPvHQAXD/j5vSFU3ZMtTXgdOqPlS74cjaHu/udoHVTQgHp7iLXP/zSBTTNpAyrR7Pc1E1pKs7GzgpeuExp8pM80lJ4uUWdQgx4s=)
-    username: ENC(yhv9gkW7Vh0WzY5GHHRxww==)
-    password: ENC(ICQEKLzRHK3L8owIMtHijg==)
+    url: ENC(obpX7E7m2G++nRbuYamrMzjAvHWfzPqAzVp61HVIQ+7oagP40Tp3qQacHPDBl692Ew1WEsznFsLzxNZBNzmD2EAYQIAdEJTnAhW20Kk4Yf0ayk3JfDremFVmy55DZ4aQcUgELA0SId0=)
+    username: ENC(tcCZtc1stS+rPnQRuPJ5DQ==)
+    password: ENC(sNQLIcXunCO35iDanu4V2A==)
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
   jpa:
     hibernate:
       ddl-auto: update
+      format_sql: true # 格式化SQL语句
     show-sql: true
   thymeleaf:
     cache: false # 启用缓存:建议生产开启
